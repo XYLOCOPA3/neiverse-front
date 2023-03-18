@@ -50,9 +50,6 @@ jobs:
         with:
           name: node-app
 
-      - name: unzip artifact for deployment
-        run: unzip release.zip
-
       - name: "Deploy to Azure Web App"
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
@@ -60,4 +57,7 @@ jobs:
           app-name: "neiverse-demo"
           slot-name: "Production"
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_1C9A0785CD6D4DA5926F084E2BA1CF12 }}
-          package: .
+          package: release.zip
+
+      - name: Delete zip file
+        run: rm -rf release.zip
