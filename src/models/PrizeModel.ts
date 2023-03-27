@@ -1,4 +1,4 @@
-import { PrizeContract } from "@/src/features/prize/types/PrizeContract";
+import { PrizeStruct } from "@/src/features/prize/types/PrizeStruct";
 import { ObjectCopier } from "@/src/models/ObjectCopier";
 import { PrizeId } from "@/src/types/PrizeId";
 
@@ -21,10 +21,7 @@ export class PrizeModel extends ObjectCopier {
    * @param prizeContract コントラクトから取得したプライズ情報
    * @return {PrizeModel} PrizeModel
    */
-  public static fromData(
-    id: PrizeId,
-    prizeContract: PrizeContract,
-  ): PrizeModel {
+  public static fromData(id: PrizeId, prizeContract: PrizeStruct): PrizeModel {
     return new PrizeModel(
       id,
       prizeContract.communityId.toString(),

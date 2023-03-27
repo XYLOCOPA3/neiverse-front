@@ -1,4 +1,4 @@
-import { QuestContract } from "@/src/features/quest/types/QuestContract";
+import { QuestStruct } from "@/src/features/quest/types/QuestContract";
 import { ObjectCopier } from "@/src/models/ObjectCopier";
 import { QuestId } from "@/src/types/QuestId";
 
@@ -20,7 +20,7 @@ export class QuestModel extends ObjectCopier {
    * @param quest コントラクトから取得したクエスト情報
    * @return {QuestModel} QuestModel
    */
-  public static fromData(questId: string, quest: QuestContract): QuestModel {
+  public static fromData(questId: string, quest: QuestStruct): QuestModel {
     return new QuestModel(
       questId,
       quest.communityId.toString(),

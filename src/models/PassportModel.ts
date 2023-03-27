@@ -1,4 +1,4 @@
-import { PassportContract } from "@/src/features/passport/types/PassportContract";
+import { PassportStruct } from "@/src/features/passport/types/PassportStruct";
 import { ObjectCopier } from "@/src/models/ObjectCopier";
 
 export class PassportModel extends ObjectCopier {
@@ -19,7 +19,7 @@ export class PassportModel extends ObjectCopier {
    */
   public static fromData(
     communityId: string,
-    passport: PassportContract,
+    passport: PassportStruct,
   ): PassportModel {
     return new PassportModel(
       passport.userId.toLowerCase(),

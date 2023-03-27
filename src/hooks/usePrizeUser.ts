@@ -1,4 +1,4 @@
-import { ClientPrizePoap } from "@/src/features/prize/api";
+import { ClientPrizePoapContract } from "@/src/features/prize/api";
 import { PrizeModel } from "@/src/models/PrizeModel";
 import { PrizeUserModel } from "@/src/models/PrizeUserModel";
 import { PrizeUserState, prizeUserState } from "@/src/stores/prizeUserState";
@@ -103,7 +103,7 @@ export const usePrizeUserController = (): PrizeUserController => {
    * @param prizeId 報酬ID
    */
   const obtain = async (prizeId: PrizeId): Promise<void> => {
-    const prizePoap = await ClientPrizePoap.instance();
+    const prizePoap = await ClientPrizePoapContract.instance();
     await prizePoap.mint(Number(prizeId));
     setPrizeUserState((prevState) => {
       const newState = deepCpyMap(prevState);

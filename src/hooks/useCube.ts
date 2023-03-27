@@ -1,5 +1,5 @@
-import { ClientCube, CubeContract } from "@/src/features/cube";
-import { CubeObjContract } from "@/src/features/cube/api";
+import { ClientCubeContract } from "@/src/features/cube";
+import { CubeObjStruct } from "@/src/features/cube";
 import { CubeModel } from "@/src/models/CubeModel";
 import {
   CubeState,
@@ -34,21 +34,19 @@ export const useCubeController = (): CubeController => {
       userId,
     });
     if (res.status !== 200) throw new Error(res.data.message);
-    const cubeXZ = res.data.cubeXZ as CubeContract[][];
+    const cubeXZ = res.data.cubeXZ as CubeObjStruct[][];
     let index = 0;
-    setCubeState((prevState) => {
-      const cubeModelXZ: CubeModel[] = [];
-      for (let z = 0; z < cubeXZ.length; z++) {
-        const cubeModelX: CubeModel[] = [];
-        for (let x = 0; x < cubeXZ.length; x++) {
-          cubeModelXZ.push(CubeModel.fromData(userId, cubeXZ[z][x], index));
-          index++;
-        }
+    const cubeModelXZ: CubeModel[] = [];
+    for (let z = 0; z < cubeXZ.length; z++) {
+      const cubeModelX: CubeModel[] = [];
+      for (let x = 0; x < cubeXZ[z].length; x++) {
+        cubeModelXZ.push(CubeModel.fromData(userId, cubeXZ[z][x], index));
+        index++;
       }
-      const newState: CubeState = new Map();
-      newState.set(userId, cubeModelXZ);
-      return newState;
-    });
+    }
+    const newState: CubeState = new Map();
+    newState.set(userId, cubeModelXZ);
+    setCubeState(newState);
   };
 
   /**
@@ -62,17 +60,18 @@ export const useCubeController = (): CubeController => {
     cubeTmp: CubeModel[],
     cube: CubeModel[],
   ): Promise<void> => {
-    const changedCubeObjs: CubeObjContract[] = [];
+    const changedCubeObjStructs: CubeObjStruct[] = [];
     const cubeIndexs: number[] = [];
     for (let i = 0; i < cube.length; i++) {
       if (CubeModel.isEqualCube(cubeTmp[i], cube[i])) continue;
-      changedCubeObjs.push(ClientCube.toCubeObj(cubeTmp[i]));
+      changedCubeObjStructs.push(ClientCubeContract.fromCubeModel(cubeTmp[i]));
       cubeIndexs.push(i);
     }
-    if (changedCubeObjs.length === 0) return;
-    changedCubeObjs.sort((a, b) => Number(a[7]) - Number(b[7]));
-    const cubeContract = await ClientCube.instance();
-    await cubeContract.setBatchCubeObj(changedCubeObjs);
+    if (changedCubeObjStructs.length === 0) return;
+    // setされていないものを先に処理しないと "lack of prizeNum" エラーが発生するためソート
+    changedCubeObjStructs.sort((a, b) => Number(a.set) - Number(b.set));
+    const cubeContract = await ClientCubeContract.instance();
+    await cubeContract.setBatchCubeObj(changedCubeObjStructs);
     setCubeState((prevState) => {
       const prevCube = prevState.get(userId)!;
       const newCube = prevCube.map((cubeObj, index) => {

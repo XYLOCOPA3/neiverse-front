@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { ServerPrizePoap } from "@/src/features/prize/api";
+import { ServerPrizePoapContract } from "@/src/features/prize/api";
 import { RPC_URL } from "@/src/lib/wallet";
 
 export default async function handler(
@@ -9,7 +9,7 @@ export default async function handler(
   if (req.method !== "POST")
     return res.status(400).json({ message: "POSTのみ受付" });
   try {
-    const prizePoap = ServerPrizePoap.instance(RPC_URL.mumbai);
+    const prizePoap = ServerPrizePoapContract.instance(RPC_URL.mumbai);
     const prizeList = await prizePoap.getAllPrizeList();
     return res.status(200).json({ prizeList });
   } catch (e) {
@@ -17,6 +17,7 @@ export default async function handler(
       console.error(e.message);
       return res.status(400).json({ message: e.message });
     }
+    console.error(e);
     return res.status(400).json({ message: e });
   }
 }

@@ -1,4 +1,4 @@
-import { Community } from "@/src/features/community/types/Community";
+import { CommunityStruct } from "@/src/features/community/types/CommunityStruct";
 import { ObjectCopier } from "@/src/models/ObjectCopier";
 import { Linkage } from "@/src/types/Linkage";
 import { toIPFSGatewayURL } from "@/src/util/ipfs";
@@ -49,7 +49,7 @@ export class CommunityModel extends ObjectCopier {
    */
   public static fromData(
     communityId: string,
-    community: Community,
+    community: CommunityStruct,
     communityJson: CommunityJson,
   ): CommunityModel {
     return new CommunityModel(

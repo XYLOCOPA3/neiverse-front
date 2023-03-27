@@ -3,27 +3,25 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "move-abi-community-passport": "rm -rf artifacts/CommunityPassport.json && cd ../neiverse-contracts/community-passport && npx hardhat compile && cp -rf artifacts/contracts/CommunityPassport.sol/CommunityPassport.json ../../neiverse-front/artifacts/CommunityPassport.json",
-    "move-abi-community-passport-creater": "rm -rf artifacts/CommunityPassportCreater.json && cd ../neiverse-contracts/community-passport-creater && npx hardhat compile && cp -rf artifacts/contracts/CommunityPassportCreater.sol/CommunityPassportCreater.json ../../neiverse-front/artifacts/CommunityPassportCreater.json",
-    "move-abi-community-portal": "rm -rf artifacts/CommunityPortal.json && cd ../neiverse-contracts/community-portal && npx hardhat compile && cp -rf artifacts/contracts/CommunityPortal.sol/CommunityPortal.json ../../neiverse-front/artifacts/CommunityPortal.json",
-    "move-abi-prize-poap": "rm -rf artifacts/PrizePoap.json && cd ../neiverse-contracts/prize-poap && npx hardhat compile && cp -rf artifacts/contracts/PrizePoap.sol/PrizePoap.json ../../neiverse-front/artifacts/PrizePoap.json",
-    "move-abi-cube": "rm -rf artifacts/Cube.json && cd ../neiverse-contracts/cube && npx hardhat compile && cp -rf artifacts/contracts/Cube.sol/Cube.json ../../neiverse-front/artifacts/Cube.json",
-    "move-abi-quest-board": "rm -rf artifacts/QuestBoard.json && cd ../neiverse-contracts/quest-board && npx hardhat compile && cp -rf artifacts/contracts/QuestBoard.sol/QuestBoard.json ../../neiverse-front/artifacts/QuestBoard.json",
-    "move-abi-quest-checker": "rm -rf artifacts/IQuestChecker.json && cd ../neiverse-contracts/quest-checker && npx hardhat compile && cp -rf artifacts/contracts/IQuestChecker.sol/IQuestChecker.json ../../neiverse-front/artifacts/IQuestChecker.json",
-    "move-abi-quest-checker-creater": "rm -rf artifacts/QuestCheckerCreater.json && cd ../neiverse-contracts/quest-checker-creater && npx hardhat compile && cp -rf artifacts/contracts/QuestCheckerCreater.sol/QuestCheckerCreater.json ../../neiverse-front/artifacts/QuestCheckerCreater.json",
-    "move-abi-quest-poap": "rm -rf artifacts/QuestPoap.json && cd ../neiverse-contracts/quest-poap && npx hardhat compile && cp -rf artifacts/contracts/QuestPoap.sol/QuestPoap.json ../../neiverse-front/artifacts/QuestPoap.json",
-    "move-abi": "npm run move-abi-community-passport && npm run move-abi-community-passport-creater && npm run move-abi-community-portal && npm run move-abi-prize-poap && npm run move-abi-cube && npm run move-abi-quest-board && npm run move-abi-quest-checker && npm run move-abi-quest-checker-creater && npm run move-abi-quest-poap",
+    "move-abi-community-passport": "rm -rf artifacts/CommunityPassport.json && cd ../neiverse-contracts && cp -rf artifacts/contracts/community-passport/CommunityPassport.sol/CommunityPassport.json ../neiverse-front/artifacts/CommunityPassport.json",
+    "move-abi-community-portal": "rm -rf artifacts/CommunityPortal.json && cd ../neiverse-contracts && cp -rf artifacts/contracts/community-portal/CommunityPortal.sol/CommunityPortal.json ../neiverse-front/artifacts/CommunityPortal.json",
+    "move-abi-cube": "rm -rf artifacts/Cube.json && cd ../neiverse-contracts && cp -rf artifacts/contracts/cube/Cube.sol/Cube.json ../neiverse-front/artifacts/Cube.json",
+    "move-abi-prize-poap": "rm -rf artifacts/PrizePoap.json && cd ../neiverse-contracts && cp -rf artifacts/contracts/prize-poap/PrizePoap.sol/PrizePoap.json ../neiverse-front/artifacts/PrizePoap.json",
+    "move-abi-quest-board": "rm -rf artifacts/QuestBoard.json && cd ../neiverse-contracts && cp -rf artifacts/contracts/quest-board/QuestBoard.sol/QuestBoard.json ../neiverse-front/artifacts/QuestBoard.json",
+    "premove-abi": "cd ../neiverse-contracts && npm run compile",
+    "move-abi": "npm run move-abi-community-passport && npm run move-abi-community-portal && npm run move-abi-cube && npm run move-abi-prize-poap && npm run move-abi-quest-board",
+    "postmove-abi": "npm run typechain",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "format": "npx prettier --write '**/*.ts' '**/*.tsx' --ignore-path .gitignore",
+    "format": "npx prettier --write '**/*.ts' '**/*.tsx' '**/*.json' --ignore-path .gitignore",
     "fix": "npm run format && npm run lint",
-    "update": "npx -p npm-check-updates  -c 'ncu' && npx -p npm-check-updates  -c 'ncu -u' && npm i"
+    "update": "npx -p npm-check-updates  -c 'ncu' && npx -p npm-check-updates  -c 'ncu -u' && npm i",
+    "typechain": "typechain --target ethers-v6 ./artifacts/*.json"
   },
   "dependencies": {
     "@headlessui/react": "^1.7.13",
-    "@next/font": "13.2.4",
     "@react-three/drei": "^9.57.3",
     "@react-three/fiber": "^8.12.0",
     "@tailwindcss/line-clamp": "^0.4.2",
@@ -34,7 +32,7 @@
     "clsx": "^1.2.1",
     "eslint": "^8.36.0",
     "eslint-config-next": "13.2.4",
-    "ethers": "^6.1.0",
+    "ethers": "^6.2.2",
     "firebase": "^9.18.0",
     "firebase-admin": "^11.5.0",
     "json-bigint": "^1.0.0",
@@ -50,6 +48,7 @@
   },
   "devDependencies": {
     "@trivago/prettier-plugin-sort-imports": "^4.1.1",
+    "@typechain/ethers-v6": "^0.3.0",
     "@types/json-bigint": "^1.0.1",
     "@types/three": "^0.149.0",
     "autoprefixer": "^10.4.14",
@@ -58,6 +57,7 @@
     "next-intercept-stdout": "^1.0.1",
     "postcss": "^8.4.21",
     "tailwind-scrollbar": "^3.0.0",
-    "tailwindcss": "^3.2.7"
+    "tailwindcss": "^3.2.7",
+    "typechain": "^8.1.1"
   }
 }

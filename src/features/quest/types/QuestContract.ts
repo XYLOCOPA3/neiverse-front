@@ -1,4 +1,4 @@
-export type QuestContract = {
+export type QuestStruct = {
   title: string;
   questURI: string;
   questCheckerAddress: string;

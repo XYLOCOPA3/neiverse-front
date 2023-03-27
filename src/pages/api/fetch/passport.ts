@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { ServerCommunityPassport } from "@/src/features/passport";
+import { ServerCommunityPassportContract } from "@/src/features/passport";
 import { RPC_URL } from "@/src/lib/wallet";
 
 export default async function handler(
@@ -10,7 +10,7 @@ export default async function handler(
     return res.status(400).json({ message: "POSTのみ受付" });
   try {
     const { passportAddress } = req.body;
-    const communityPassport = new ServerCommunityPassport(
+    const communityPassport = ServerCommunityPassportContract.instance(
       RPC_URL.mumbai,
       passportAddress,
     );
@@ -21,6 +21,7 @@ export default async function handler(
       console.error(e.message);
       return res.status(400).json({ message: e.message });
     }
+    console.error(e);
     return res.status(400).json({ message: e });
   }
 }

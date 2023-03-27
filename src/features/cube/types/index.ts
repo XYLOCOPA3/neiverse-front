@@ -1,1 +1,1 @@
-export * from "./CubeContract";
+export * from "./CubeObjStruct";

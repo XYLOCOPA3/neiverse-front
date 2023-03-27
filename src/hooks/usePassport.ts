@@ -1,5 +1,5 @@
-import { ClientCommunityPassport } from "@/src/features/passport";
-import { PassportContract } from "@/src/features/passport/types/PassportContract";
+import { ClientCommunityPassportContract } from "@/src/features/passport";
+import { PassportStruct } from "@/src/features/passport/types/PassportStruct";
 import { PassportModel } from "@/src/models/PassportModel";
 import { PassportState, passportState } from "@/src/stores/passportState";
 import { CommunityId } from "@/src/types/CommunityId";
@@ -43,7 +43,7 @@ export const usePassportController = (): PassportController => {
       passportAddress,
     });
     if (res.status !== 200) throw new Error(res.data.message);
-    const passportList: PassportContract[] = res.data;
+    const passportList: PassportStruct[] = res.data;
     const newPassportMap: PassportState = new Map();
     for (let i = 0; i < passportList.length; i++) {
       const passportModel = PassportModel.fromData(
@@ -68,14 +68,11 @@ export const usePassportController = (): PassportController => {
     passportAddress: string,
     userId: UserId,
   ): Promise<void> => {
-    const passportContract = await ClientCommunityPassport.instance(
+    const passportContract = await ClientCommunityPassportContract.instance(
       passportAddress,
     );
     await passportContract.mint();
-    const passport = await passportContract.getPassport(
-      communityId.toString(),
-      userId,
-    );
+    const passport = await passportContract.getPassport(userId);
     setPassport((prevState) => {
       const newPassportMap = deepCpyMap(prevState);
       const passportModel = PassportModel.fromData(communityId, passport);
@@ -94,7 +91,7 @@ export const usePassportController = (): PassportController => {
     passportAddress: string,
     userId: UserId,
   ): Promise<void> => {
-    const passportContract = await ClientCommunityPassport.instance(
+    const passportContract = await ClientCommunityPassportContract.instance(
       passportAddress,
     );
     await passportContract.burn();

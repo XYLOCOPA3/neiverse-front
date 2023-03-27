@@ -1,4 +1,4 @@
-import { PrizeContract } from "@/src/features/prize/types/PrizeContract";
+import { PrizeStruct } from "@/src/features/prize/types/PrizeStruct";
 import { PrizeModel } from "@/src/models/PrizeModel";
 import {
   PrizeState,
@@ -26,7 +26,7 @@ export const usePrizeController = (): PrizeController => {
   const init = async (): Promise<void> => {
     const res = await axios.post("/api/fetch/prize");
     if (res.status !== 200) throw new Error(res.data.message);
-    const prizeList = res.data.prizeList as PrizeContract[];
+    const prizeList = res.data.prizeList as PrizeStruct[];
     setPrizeState((prevState) => {
       const newState: PrizeState = new Map();
       for (let i = 0; i < prizeList.length; i++) {

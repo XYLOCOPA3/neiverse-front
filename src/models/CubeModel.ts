@@ -1,4 +1,4 @@
-import { CubeContract, toCubePosition } from "@/src/features/cube";
+import { CubeObjStruct, toCubePosition } from "@/src/features/cube";
 import { ObjectCopier } from "@/src/models/ObjectCopier";
 import { Position } from "@/src/types/Position";
 import { PrizeId } from "@/src/types/PrizeId";
@@ -19,31 +19,31 @@ export class CubeModel extends ObjectCopier {
   /**
    * fromData
    * @param userId ユーザーID
-   * @param cubeContract コントラクトから取得した箱庭情報
+   * @param cubeObjStruct コントラクトから取得した箱庭情報
    * @param index 箱庭index
    * @return {CubeModel} CubeModel
    */
   public static fromData(
     userId: UserId,
-    cubeContract: CubeContract,
+    cubeObjStruct: CubeObjStruct,
     index: number,
   ): CubeModel {
     const position: Position = {
-      x: cubeContract.positionX,
-      y: cubeContract.positionY,
-      z: cubeContract.positionZ,
+      x: Number(cubeObjStruct.positionX),
+      y: Number(cubeObjStruct.positionY),
+      z: Number(cubeObjStruct.positionZ),
     };
     const rotation: Rotation = {
-      x: cubeContract.rotationX,
-      y: cubeContract.rotationY,
-      z: cubeContract.rotationZ,
+      x: Number(cubeObjStruct.rotationX),
+      y: Number(cubeObjStruct.rotationY),
+      z: Number(cubeObjStruct.rotationZ),
     };
     return new CubeModel(
       userId,
-      cubeContract.prizeId.toString(),
-      cubeContract.set ? position : toCubePosition(index),
+      cubeObjStruct.prizeId.toString(),
+      cubeObjStruct.set ? position : toCubePosition(index),
       rotation,
-      cubeContract.set,
+      cubeObjStruct.set,
     );
   }
 
