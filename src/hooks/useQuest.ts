@@ -1,4 +1,4 @@
-import { QuestContract } from "@/src/features/quest/types/QuestContract";
+import { QuestStruct } from "@/src/features/quest/types/QuestContract";
 import { QuestModel } from "@/src/models/QuestModel";
 import {
   QuestState,
@@ -26,7 +26,7 @@ export const useQuestController = (): QuestController => {
   const init = async (): Promise<void> => {
     const res = await axios.post("/api/fetch/quest");
     if (res.status !== 200) throw new Error(res.data.message);
-    const questList = res.data.questList as QuestContract[];
+    const questList = res.data.questList as QuestStruct[];
     const newState: QuestState = new Map();
     for (let i = 0; i < questList.length; i++) {
       newState.set(

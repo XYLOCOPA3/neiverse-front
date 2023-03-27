@@ -1,4 +1,4 @@
-import { Community } from "@/src/features/community/types/Community";
+import { CommunityStruct } from "@/src/features/community/types/CommunityStruct";
 import { CommunityJson, CommunityModel } from "@/src/models/CommunityModel";
 import { CommunityState, communityState } from "@/src/stores/communityState";
 import { CommunityId } from "@/src/types/CommunityId";
@@ -23,10 +23,10 @@ export const useCommunityController = (): CommunityController => {
   const init = async (): Promise<void> => {
     const res = await axios.post("/api/fetch/community");
     if (res.status !== 200) throw new Error(res.data.message);
-    const communityList = res.data as Community[];
+    const communityList = res.data as CommunityStruct[];
     const promiseList = [];
     for (let i = 0; i < communityList.length; i++) {
-      const url = toIPFSGatewayURL(communityList[i].uri);
+      const url = toIPFSGatewayURL(communityList[i].communityURI);
       promiseList.push(axios.get(url));
     }
     const results = await Promise.all(promiseList);

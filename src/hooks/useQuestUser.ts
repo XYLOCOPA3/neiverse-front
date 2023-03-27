@@ -1,4 +1,4 @@
-import { ClientQuestBoard } from "@/src/features/quest/api";
+import { ClientQuestBoardContract } from "@/src/features/quest/api";
 import { QuestModel } from "@/src/models/QuestModel";
 import { QuestUserModel } from "@/src/models/QuestUserModel";
 import { questUserState } from "@/src/stores/questUserState";
@@ -102,7 +102,7 @@ export const useQuestUserController = (): QuestUserController => {
    * @param questId クエストID
    */
   const claim = async (questId: QuestId): Promise<void> => {
-    const questBoard = await ClientQuestBoard.instance();
+    const questBoard = await ClientQuestBoardContract.instance();
     await questBoard.claim(Number(questId));
     setQuestList((prevState) => {
       const newState = deepCpyMap(prevState);
