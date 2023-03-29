@@ -19,25 +19,18 @@ export const Logo = ({ className }: LogoProps) => {
       className={clsx("flex", "items-center", "justify-center", className)}
     >
       <Image
-        className={clsx(
-          "rounded-full",
-          "w-[20%]",
-          "h-auto",
-          "hidden",
-          "mr-[10px]",
-          "md:inline",
-        )}
-        src="/img/logo_icon.png"
+        className={clsx("md:hidden")}
+        src="/img/neiverse-name-white.png"
         alt="logoicon"
-        width={100}
-        height={100}
+        width={120}
+        height={50}
       />
       <Image
-        className={clsx("max-w-[70%]")}
-        src="/img/logo_text.png"
+        className={clsx("hidden", "md:ml-[20px]", "md:inline")}
+        src="/img/neiverse-logo-white.png"
         alt="logotext"
-        width={1250}
-        height={207}
+        width={200}
+        height={50}
       />
     </Link>
   );

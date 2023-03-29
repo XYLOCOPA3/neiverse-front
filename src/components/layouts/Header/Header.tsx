@@ -25,7 +25,7 @@ export const Header = () => {
         <DrawerButton
           className={clsx("md:hidden", "rounded-full", "w-[50px]", "h-[50px]")}
         ></DrawerButton>
-        <Logo className={clsx("w-[200px]")} />
+        <Logo className={clsx("w-[180px]")} />
         <Login />
       </div>
     </header>
